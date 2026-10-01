@@ -1,7 +1,5 @@
 # Bài thực hành MySQL – Buổi 3
 
-Bài thực hành chỉ sử dụng MySQL, không sử dụng PHP.
-
 ## File bài làm
 
 - `bai_thuc_hanh_buoi_3.sql`: chứa toàn bộ câu lệnh SQL của cả 2 bài.
