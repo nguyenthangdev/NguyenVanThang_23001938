@@ -1,0 +1,54 @@
+.student {
+  width: 520px;
+  text-align: center;
+}
+
+.student img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid #fff;
+  box-shadow: 0 0 0 3px var(--primary);
+}
+
+.info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 24px;
+  text-align: left;
+  margin: 20px 0;
+  padding: 16px 20px;
+  background: #f9fafb;
+  border-radius: 10px;
+  line-height: 1.8;
+}
+
+.gioi { color: #15803d; font-weight: 600; }
+.kha { color: #1d4ed8; font-weight: 600; }
+.trung-binh { color: #b45309; font-weight: 600; }
+.chua-dat { color: #b91c1c; font-weight: 600; }
+
+.badge {
+  padding: 3px 12px;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 13px;
+}
+
+.intro {
+  background: #eef2ff;
+  border-left: 4px solid var(--primary);
+  padding: 10px 12px;
+  border-radius: 6px;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.edit {
+  border-top: 1px solid #e5e7eb;
+  margin-top: 16px;
+  padding-top: 12px;
+  text-align: left;
+  font-size: 14px;
+}

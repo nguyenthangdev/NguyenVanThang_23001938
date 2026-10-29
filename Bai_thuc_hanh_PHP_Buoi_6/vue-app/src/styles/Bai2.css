@@ -1,0 +1,47 @@
+.booking {
+  width: 440px;
+}
+
+.row {
+  margin-bottom: 16px;
+}
+
+button + button {
+  margin-left: 8px;
+}
+
+label.title {
+  display: block;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-bottom: 4px;
+}
+
+.radio {
+  margin-right: 16px;
+}
+
+input[type=text],
+select {
+  width: 100%;
+}
+
+.qty input {
+  width: 60px;
+  text-align: center;
+}
+
+.total {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.confirm {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 16px;
+  line-height: 1.7;
+}
