@@ -1,0 +1,81 @@
+.the {
+  position: relative;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.the:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.14);
+}
+
+.the img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.the .body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.the h3 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.the .gia {
+  margin: 0;
+  font-weight: 700;
+  font-size: 17px;
+  color: var(--primary);
+}
+
+.the .nhan {
+  align-self: flex-start;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.the .con {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.the .het {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.the .mota {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.the .hanh-dong {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 4px;
+}
+
+.the .hanh-dong button {
+  flex: 1;
+  padding: 7px 4px;
+  font-size: 14px;
+}
