@@ -1,0 +1,51 @@
+services:
+  app:
+    build:
+      context: .
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: database
+      DB_NAME: product_db
+      DB_USER: product_user
+      DB_PASSWORD: product_password
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: unless-stopped
+
+  database:
+    image: mysql:8.4
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: product_db
+      MYSQL_USER: product_user
+      MYSQL_PASSWORD: product_password
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database.sql:/docker-entrypoint-initdb.d/01-database.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD --silent"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 20s
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    ports:
+      - "8080:80"
+    environment:
+      PMA_HOST: database
+      PMA_USER: product_user
+      PMA_PASSWORD: product_password
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  mysql_data:
