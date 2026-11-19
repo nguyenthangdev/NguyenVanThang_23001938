@@ -39,7 +39,7 @@ Front-end gọi `/api/products.php`, và Vite dev server chuyển các yêu cầ
 ## Cấu trúc
 
 ```
-Bai_thuc_hanh_PHP_Buoi_8/
+Bai_thuc_hanh_PHP_Buoi_8_9/
 ├── back-end/
 │   ├── api/
 │   │   ├── products.php      # GET (phân trang), POST, PUT, DELETE
