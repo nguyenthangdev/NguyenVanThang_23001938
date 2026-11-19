@@ -4,9 +4,10 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
   plugins: [vue()],
   server: {
-    // Chuyển /api sang back-end PHP để front-end gọi cùng origin, không dính CORS
+    // Chuyển /api và /uploads (ảnh sản phẩm) sang back-end PHP để front-end gọi cùng origin, không dính CORS
     proxy: {
-      '/api': 'http://localhost:8000'
+      '/api': 'http://localhost:8000',
+      '/uploads': 'http://localhost:8000'
     }
   }
 })

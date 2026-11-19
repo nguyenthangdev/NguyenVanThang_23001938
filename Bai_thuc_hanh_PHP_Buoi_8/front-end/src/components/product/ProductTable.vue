@@ -1,5 +1,6 @@
 <script>
 import { formatCurrency } from '../../utils/format.js'
+import { imageUrl } from '../../utils/image.js'
 
 export default {
   props: {
@@ -7,17 +8,21 @@ export default {
     loading: { type: Boolean, default: false }
   },
   emits: ['edit', 'remove'],
-  methods: { formatCurrency }
+  methods: { formatCurrency, imageUrl }
 }
 </script>
 
 <template>
   <table>
     <thead>
-      <tr><th>Tên sản phẩm</th><th class="num">Đơn giá</th><th class="num">Số lượng tồn</th><th></th></tr>
+      <tr><th>Ảnh</th><th>Tên sản phẩm</th><th class="num">Đơn giá</th><th class="num">Số lượng tồn</th><th></th></tr>
     </thead>
     <tbody>
       <tr v-for="p in products" :key="p.id">
+        <td class="thumb-cell">
+          <img v-if="p.image" :src="imageUrl(p.image)" :alt="p.name" class="thumb" />
+          <span v-else class="no-image">Chưa có ảnh</span>
+        </td>
         <td>{{ p.name }}</td>
         <td class="num">{{ formatCurrency(p.price) }}</td>
         <td class="num">
@@ -29,7 +34,7 @@ export default {
         </td>
       </tr>
       <tr v-if="products.length === 0">
-        <td colspan="4" class="empty">{{ loading ? 'Đang tải...' : 'Chưa có sản phẩm nào' }}</td>
+        <td colspan="5" class="empty">{{ loading ? 'Đang tải...' : 'Chưa có sản phẩm' }}</td>
       </tr>
     </tbody>
   </table>
@@ -37,12 +42,18 @@ export default {
 
 <style scoped>
 table { border-collapse: separate; border-spacing: 0; width: 100%; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
-th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: middle; }
 th { background: var(--primary-soft); color: var(--primary-dark); font-size: 14px; }
 tbody tr:last-child td { border-bottom: none; }
 .num { text-align: right; }
 .actions { text-align: right; white-space: nowrap; }
 .actions button { margin-left: 6px; }
+.thumb-cell { width: 76px; }
+.thumb { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; display: block; border: 1px solid var(--border); }
+.no-image {
+  display: flex; align-items: center; justify-content: center; text-align: center;
+  width: 56px; height: 56px; border-radius: 8px; background: var(--bg); color: var(--muted); font-size: 11px; line-height: 1.2;
+}
 .badge { padding: 2px 10px; border-radius: 999px; font-size: 13px; font-weight: 600; }
 .in { background: var(--success-soft); color: var(--success); }
 .out { background: var(--danger-soft); color: var(--danger); }

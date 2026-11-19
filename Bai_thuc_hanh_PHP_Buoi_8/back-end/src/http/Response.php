@@ -7,17 +7,18 @@ class Response
     {
         http_response_code($status);
         header('Content-Type: application/json; charset=utf-8');
-        echo json_encode($body, JSON_UNESCAPED_UNICODE);
+        echo json_encode($body, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
         exit;
     }
 
-    public static function success(string $message, mixed $data = null, int $status = 200): never
+    // $extra: các trường bổ sung ngang hàng với data, ví dụ pagination
+    public static function success(string $message, mixed $data = null, int $status = 200, array $extra = []): never
     {
         $body = ['success' => true, 'message' => $message];
         if ($data !== null) {
             $body['data'] = $data;
         }
-        self::json($status, $body);
+        self::json($status, $body + $extra);
     }
 
     public static function error(string $message, int $status = 400): never

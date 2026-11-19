@@ -1,28 +1,12 @@
 <?php
 
-// Điểm vào của API: /api/products.php (GET, POST, PUT?id=, DELETE?id=)
-require_once __DIR__ . '/../src/http/Response.php';
-require_once __DIR__ . '/../src/database/Database.php';
-require_once __DIR__ . '/../src/validators/ProductValidator.php';
-require_once __DIR__ . '/../src/repositories/ProductRepository.php';
-require_once __DIR__ . '/../src/controllers/ProductController.php';
-
-// CORS cho front-end chạy ở cổng khác (Vite dev server)
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
+// Điểm vào của API: /api/products.php (GET?page=&limit=, POST, PUT?id=, DELETE?id=)
+require_once __DIR__ . '/../src/bootstrap.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 
-if ($method === 'OPTIONS') {
-    http_response_code(204);
-    exit;
-}
-
 try {
-    $controller = new ProductController(
-        new ProductRepository(Database::connect(require __DIR__ . '/../src/config/config.php'))
-    );
+    $controller = new ProductController(new ProductRepository(connectDatabase()), new ImageStorage());
 
     // id lấy từ URL, chỉ nhận số nguyên dương
     $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) ?: null;
@@ -37,7 +21,7 @@ try {
     }
 
     match ($method) {
-        'GET'    => $controller->index(),
+        'GET'    => $controller->index($_GET),
         'POST'   => $controller->store($input),
         'PUT'    => $controller->update($id, $input),
         'DELETE' => $controller->destroy($id),

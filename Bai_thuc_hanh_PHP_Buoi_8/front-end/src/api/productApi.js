@@ -1,13 +1,11 @@
 // Lớp duy nhất giao tiếp với back-end PHP. Lỗi (success = false hoặc mất kết nối) được ném ra dưới dạng Error.
-const BASE_URL = '/api/products.php'
+const PRODUCTS_URL = '/api/products.php'
+const UPLOAD_URL = '/api/upload.php'
 
-async function request(url = BASE_URL, options = {}) {
+async function request(url, options = {}) {
   let res
   try {
-    res = await fetch(url, {
-      headers: { 'Content-Type': 'application/json' },
-      ...options
-    })
+    res = await fetch(url, options)
   } catch {
     throw new Error('Không kết nối được tới máy chủ.')
   }
@@ -22,17 +20,33 @@ async function request(url = BASE_URL, options = {}) {
   return body
 }
 
+function sendJson(url, method, data) {
+  return request(url, {
+    method,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+}
+
 export const productApi = {
-  async list() {
-    return (await request()).data
+  // Trả về { data, pagination }
+  list(page, limit) {
+    return request(`${PRODUCTS_URL}?page=${page}&limit=${limit}`)
   },
   create(product) {
-    return request(BASE_URL, { method: 'POST', body: JSON.stringify(product) })
+    return sendJson(PRODUCTS_URL, 'POST', product)
   },
   update(id, product) {
-    return request(`${BASE_URL}?id=${id}`, { method: 'PUT', body: JSON.stringify(product) })
+    return sendJson(`${PRODUCTS_URL}?id=${id}`, 'PUT', product)
   },
   remove(id) {
-    return request(`${BASE_URL}?id=${id}`, { method: 'DELETE' })
+    return request(`${PRODUCTS_URL}?id=${id}`, { method: 'DELETE' })
+  },
+  // Gửi multipart/form-data; không tự đặt Content-Type để trình duyệt thêm boundary
+  uploadImage(id, file) {
+    const form = new FormData()
+    form.append('id', id)
+    form.append('image', file)
+    return request(UPLOAD_URL, { method: 'POST', body: form })
   }
 }

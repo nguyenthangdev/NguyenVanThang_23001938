@@ -1,6 +1,6 @@
-# Bài thực hành PHP + Vue.js – Buổi 8
+# Bài thực hành PHP + Vue.js – Buổi 8 và Buổi 9
 
-Ứng dụng quản lý sản phẩm gồm hai phần tách biệt:
+Ứng dụng quản lý sản phẩm (CRUD ở Buổi 8, thêm upload ảnh và phân trang ở Buổi 9) gồm hai phần tách biệt:
 
 - **Back-end** (`back-end/`): API REST viết bằng PHP + MySQL, chạy bằng Docker.
 - **Front-end** (`front-end/`): giao diện Vue 3 + Vite, gọi API để xem, thêm, sửa, xóa sản phẩm.
@@ -34,25 +34,28 @@ Mở địa chỉ Vite in ra (mặc định <http://localhost:5173>).
 
 ## Cách hai phần kết nối với nhau
 
-Front-end gọi `/api/products.php`, và Vite dev server chuyển các yêu cầu `/api` sang back-end ở cổng 8000 (cấu hình trong `front-end/vite.config.js`). Nhờ vậy trình duyệt coi như gọi cùng origin, không bị chặn CORS.
+Front-end gọi `/api/products.php`, và Vite dev server chuyển các yêu cầu `/api` và `/uploads` (ảnh sản phẩm) sang back-end ở cổng 8000 (cấu hình trong `front-end/vite.config.js`). Nhờ vậy trình duyệt coi như gọi cùng origin, không bị chặn CORS.
 
 ## Cấu trúc
 
 ```
 Bai_thuc_hanh_PHP_Buoi_8/
 ├── back-end/
-│   ├── api/products.php      # điểm vào API (GET, POST, PUT, DELETE)
-│   ├── src/                  # config, database, http, controllers, validators, repositories
-│   ├── database.sql          # tạo bảng products và 3 dòng dữ liệu mẫu
+│   ├── api/
+│   │   ├── products.php      # GET (phân trang), POST, PUT, DELETE
+│   │   └── upload.php        # upload ảnh sản phẩm
+│   ├── src/                  # config, database, http, controllers, validators, repositories, services
+│   ├── uploads/              # ảnh sản phẩm đã upload
+│   ├── database.sql          # tạo bảng products và 12 dòng dữ liệu mẫu
 │   ├── Dockerfile
 │   └── compose.yaml          # PHP, MySQL, phpMyAdmin
 └── front-end/
     ├── src/
     │   ├── api/              # gọi API
     │   ├── views/            # màn hình quản lý sản phẩm
-    │   ├── components/       # bảng, biểu mẫu, popup xác nhận, thông báo
+    │   ├── components/       # bảng, biểu mẫu, phân trang, popup xác nhận, thông báo
     │   ├── services/         # store thông báo
-    │   ├── utils/            # hàm định dạng
+    │   ├── utils/            # định dạng tiền, kiểm tra ảnh
     │   └── styles/           # CSS toàn cục
     └── vite.config.js
 ```
